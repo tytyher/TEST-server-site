@@ -2,66 +2,76 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>TyhLand</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TyhLand | Технологии будущего</title>
     <style>
         :root {
-            /* Тёмная тема */
-            --bg: #1a1a24;
-            --panel: #252535;
+            --bg: #f4f4f4;
+            --text: #1a1a24;
+            --panel: rgba(255, 255, 255, 0.7);
             --accent: #8a2be2;
+            --transition: 0.5s cubic-bezier(0.2, 0, 0, 1);
+        }
+        .dark-theme {
+            --bg: #1a1a24;
             --text: #ffffff;
+            --panel: rgba(45, 45, 65, 0.7);
         }
+        body { background: var(--bg); color: var(--text); transition: background var(--transition), color var(--transition); font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
+        
+        header { display: flex; justify-content: space-between; padding: 20px 40px; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .menu-btn { cursor: pointer; font-weight: bold; font-size: 1.2rem; }
+        
+        /* Боковое меню */
+        .sidebar { position: fixed; left: -300px; top: 0; width: 250px; height: 100%; background: var(--panel); backdrop-filter: blur(20px); transition: var(--transition); padding: 80px 20px; z-index: 90; box-shadow: 5px 0 15px rgba(0,0,0,0.1); }
+        .sidebar.active { left: 0; }
+        .sidebar ul { list-style: none; padding: 0; }
+        .sidebar li { margin: 20px 0; font-size: 1.2rem; cursor: pointer; opacity: 0.7; transition: 0.3s; }
+        .sidebar li:hover { opacity: 1; transform: translateX(10px); }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Segoe UI', sans-serif;
-            transition: background-color 0.5s ease; /* Плавная смена темы */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .card {
-            background: var(--panel);
-            padding: 40px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px); /* Тот самый эффект размытия */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-        }
-
-        button {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Плавный отскок */
-        }
-
-        button:hover {
-            transform: scale(0.95); /* Уменьшение при наведении */
-        }
+        /* Контент */
+        main { text-align: center; padding: 100px 20px; }
+        h1 { font-size: 3rem; margin-bottom: 20px; }
+        
+        .modes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 40px; }
+        .card { background: var(--panel); backdrop-filter: blur(10px); padding: 30px; border-radius: 20px; transition: var(--transition); border: 1px solid rgba(255,255,255,0.1); }
+        .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        
+        button { background: var(--accent); color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; transition: var(--transition); margin: 0 5px; }
+        button:hover { transform: scale(0.9); }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>TyhLand</h1>
-        <p>Добро пожаловать на лучший сервер.</p>
-        <button id="theme-btn">Переключить тему</button>
+    <header>
+        <div class="menu-btn" onclick="toggleSidebar()">☰ TyhLand</div>
+        <div>
+            <button>Логин</button> 
+            <button>Регистрация</button> 
+            <button onclick="toggleTheme()">🌓</button>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <ul>
+            <li>Настройки</li><li>Аккаунт</li><li>Правила</li><li>Режимы</li><li>Донат</li>
+        </ul>
     </div>
 
+    <main>
+        <h1>TyhLand — Больше, чем Minecraft</h1>
+        <p>Технологический прорыв в мире блоков. Стабильность, мощь и уникальные механики.</p>
+    </main>
+
+    <section class="modes-grid">
+        <div class="card"><h3>Дуэли</h3><p>PvP-арена нового поколения. Никаких лагов, только чистая проверка скилла.</p></div>
+        <div class="card"><h3>Столбы удачи</h3><p>Прыжок в неизвестность. Рискни всем ради легендарного лута.</p></div>
+        <div class="card"><h3>Бедроковая коробка</h3><p>Survival-челлендж в ограниченном пространстве. Выживет только хитрейший.</p></div>
+    </section>
+
     <script>
-        const btn = document.getElementById('theme-btn');
-        btn.addEventListener('click', () => {
-            document.body.style.backgroundColor = document.body.style.backgroundColor === 'rgb(240, 240, 240)' ? '#1a1a24' : '#f0f0f0';
-            // Тут можно добавить полноценный переключатель классов для тем
-        });
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
     </script>
 </body>
 </html>
