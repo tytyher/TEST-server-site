@@ -2,14 +2,66 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Мой первый сайт</title>
+    <title>TyhLand</title>
     <style>
-        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #f4f4f4; }
-        h1 { color: #333; }
+        :root {
+            /* Тёмная тема */
+            --bg: #1a1a24;
+            --panel: #252535;
+            --accent: #8a2be2;
+            --text: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', sans-serif;
+            transition: background-color 0.5s ease; /* Плавная смена темы */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card {
+            background: var(--panel);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px); /* Тот самый эффект размытия */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Плавный отскок */
+        }
+
+        button:hover {
+            transform: scale(0.95); /* Уменьшение при наведении */
+        }
     </style>
 </head>
 <body>
-    <h1>Привет! Это сайт Toni Stark</h1>
-    <p>Здесь скоро будет крутой контент про мои проекты.</p>
+
+    <div class="card">
+        <h1>TyhLand</h1>
+        <p>Добро пожаловать на лучший сервер.</p>
+        <button id="theme-btn">Переключить тему</button>
+    </div>
+
+    <script>
+        const btn = document.getElementById('theme-btn');
+        btn.addEventListener('click', () => {
+            document.body.style.backgroundColor = document.body.style.backgroundColor === 'rgb(240, 240, 240)' ? '#1a1a24' : '#f0f0f0';
+            // Тут можно добавить полноценный переключатель классов для тем
+        });
+    </script>
 </body>
 </html>
