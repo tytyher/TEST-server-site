@@ -8,93 +8,80 @@
         :root {
             --bg: #f4f4f4;
             --text: #1a1a24;
-            --panel: rgba(255, 255, 255, 0.7);
+            --panel: rgba(255, 255, 255, 0.8);
             --accent: #8a2be2;
-            --anim: cubic-bezier(0.23, 1, 0.32, 1);
+            --ease: cubic-bezier(0.19, 1, 0.22, 1);
         }
         .dark-theme {
             --bg: #1a1a24;
             --text: #ffffff;
-            --panel: rgba(45, 45, 65, 0.7);
+            --panel: rgba(45, 45, 65, 0.8);
         }
 
-        /* Глобальная плавность всего */
-        body { 
-            background: var(--bg); 
-            color: var(--text); 
-            transition: background 0.8s var(--anim), color 0.8s var(--anim); 
-            font-family: 'Segoe UI', sans-serif; 
-            margin: 0; 
-        }
+        /* Общие настройки */
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: background 0.6s var(--ease), color 0.6s var(--ease); }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; overflow-x: hidden; }
 
-        /* Анимация появления элементов */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        header { display: flex; justify-content: space-between; padding: 30px 50px; align-items: center; }
+        /* Хедер (жесткая фиксация) */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; height: 80px; }
+        .nav-right { display: flex; gap: 10px; }
         
+        /* Скрытие кнопок на мобилке */
+        @media (max-width: 768px) { .nav-right { display: none; } }
+
+        /* Боковое меню */
         .sidebar { 
-            position: fixed; left: -100%; top: 0; width: 280px; height: 100%; 
-            background: var(--panel); backdrop-filter: blur(30px); 
-            transition: left 0.8s var(--anim); 
-            padding: 100px 40px; z-index: 99; 
+            position: fixed; left: -320px; top: 0; width: 300px; height: 100%; 
+            background: var(--panel); backdrop-filter: blur(20px); 
+            transition: left 0.6s var(--ease); z-index: 1000; padding: 100px 40px; 
         }
-        .sidebar.active { left: 0; }
+        .sidebar.open { left: 0; }
 
-        .modes-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 30px; padding: 50px; 
-            animation: fadeUp 1s ease-out forwards;
+        /* Сетка режимов */
+        .grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; padding: 5% 5%; 
         }
-
         .card { 
-            background: var(--panel); padding: 30px; border-radius: 25px; 
-            cursor: pointer; transition: transform 0.6s var(--anim), box-shadow 0.6s var(--anim); 
-            backdrop-filter: blur(15px);
+            background: var(--panel); padding: 30px; border-radius: 20px; 
+            transform: translateY(20px); opacity: 0; 
+            animation: showUp 0.8s var(--ease) forwards;
         }
-        .card:hover { transform: translateY(-15px) scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+        @keyframes showUp { to { transform: translateY(0); opacity: 1; } }
 
-        button { 
-            background: var(--accent); color: white; border: none; 
-            padding: 15px 30px; border-radius: 15px; cursor: pointer; 
-            transition: transform 0.4s var(--anim); 
-        }
-        button:hover { transform: scale(0.92); }
+        /* Интерактив */
+        button { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; }
+        button:hover { transform: scale(0.95); }
     </style>
 </head>
 <body>
 
     <header>
-        <div style="cursor:pointer; font-size: 1.5rem;" onclick="toggleSidebar()">☰ TyhLand</div>
-        <div>
-            <button>Логин</button> <button>Регистрация</button> 
-            <button onclick="toggleTheme()">Тема</button>
+        <div style="cursor:pointer; font-size: 1.5rem;" onclick="document.getElementById('side').classList.toggle('open')">☰ TyhLand</div>
+        <div class="nav-right">
+            <button>Логин</button><button>Регистрация</button><button onclick="document.body.classList.toggle('dark-theme')">🌓</button>
         </div>
     </header>
 
-    <div class="sidebar" id="sidebar">
-        <ul style="list-style:none; padding:0;">
+    <div class="sidebar" id="side">
+        <ul style="list-style:none;">
             <li style="margin:20px 0;">Настройки</li><li>Аккаунт</li><li>Правила</li><li>Режимы</li><li>Донат</li>
         </ul>
     </div>
 
-    <main style="text-align: center; padding: 80px 20px;">
+    <main style="padding: 50px 5%;">
         <h1>TyhLand</h1>
-        <p>Сервер, который задает стандарты.</p>
+        <p style="margin-bottom: 40px;">Сервер нового поколения.</p>
+        <div class="grid">
+            <div class="card" style="animation-delay: 0.1s;"><h3>Дуэли</h3><p>PvP-арена.</p></div>
+            <div class="card" style="animation-delay: 0.2s;"><h3>Столбы удачи</h3><p>Рискни всем.</p></div>
+            <div class="card" style="animation-delay: 0.3s;"><h3>Бедроковая коробка</h3><p>Выживание.</p></div>
+            <div class="card" style="animation-delay: 0.4s;"><h3>OneBlock</h3><p>Один блок.</p></div>
+        </div>
     </main>
 
-    <section class="modes-grid">
-        <div class="card"><h3>Дуэли</h3><p>PvP-арена: только скилл.</p></div>
-        <div class="card"><h3>Столбы удачи</h3><p>Прыгни и найди лут.</p></div>
-        <div class="card"><h3>Бедроковая коробка</h3><p>Выживание в тесноте.</p></div>
-        <div class="card"><h3>OneBlock</h3><p>Один блок — бесконечные возможности.</p></div>
-    </section>
-
     <script>
-        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        // Никаких резких смен, всё через классы
     </script>
 </body>
 </html>
