@@ -3,67 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TyhLand | Технологии будущего</title>
+    <title>TyhLand | Next Gen</title>
     <style>
         :root {
             --bg: #f4f4f4;
             --text: #1a1a24;
             --panel: rgba(255, 255, 255, 0.7);
             --accent: #8a2be2;
-            /* Плавность везде */
-            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            --anim: cubic-bezier(0.23, 1, 0.32, 1);
         }
         .dark-theme {
             --bg: #1a1a24;
             --text: #ffffff;
             --panel: rgba(45, 45, 65, 0.7);
         }
+
+        /* Глобальная плавность всего */
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            transition: background 0.8s var(--anim), color 0.8s var(--anim); 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+        }
+
+        /* Анимация появления элементов */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header { display: flex; justify-content: space-between; padding: 30px 50px; align-items: center; }
         
-        * { transition: background-color 0.6s ease, color 0.6s ease, transform 0.6s ease, opacity 0.6s ease; }
-        
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
-        
-        header { display: flex; justify-content: space-between; padding: 20px 40px; align-items: center; z-index: 100; }
-        .menu-btn { cursor: pointer; font-weight: bold; font-size: 1.5rem; }
-        
-        /* Плавная боковая панель */
-        .sidebar { position: fixed; left: -100%; top: 0; width: 300px; height: 100%; background: var(--panel); backdrop-filter: blur(20px); transition: var(--transition); padding: 80px 20px; z-index: 90; }
+        .sidebar { 
+            position: fixed; left: -100%; top: 0; width: 280px; height: 100%; 
+            background: var(--panel); backdrop-filter: blur(30px); 
+            transition: left 0.8s var(--anim); 
+            padding: 100px 40px; z-index: 99; 
+        }
         .sidebar.active { left: 0; }
-        
-        .modes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 40px; }
-        .card { background: var(--panel); padding: 30px; border-radius: 20px; cursor: pointer; }
-        .card:hover { transform: scale(1.05) translateY(-10px); }
-        
-        button { background: var(--accent); color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; }
-        button:hover { transform: scale(0.9); }
+
+        .modes-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; padding: 50px; 
+            animation: fadeUp 1s ease-out forwards;
+        }
+
+        .card { 
+            background: var(--panel); padding: 30px; border-radius: 25px; 
+            cursor: pointer; transition: transform 0.6s var(--anim), box-shadow 0.6s var(--anim); 
+            backdrop-filter: blur(15px);
+        }
+        .card:hover { transform: translateY(-15px) scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+
+        button { 
+            background: var(--accent); color: white; border: none; 
+            padding: 15px 30px; border-radius: 15px; cursor: pointer; 
+            transition: transform 0.4s var(--anim); 
+        }
+        button:hover { transform: scale(0.92); }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="menu-btn" onclick="toggleSidebar()">☰ TyhLand</div>
+        <div style="cursor:pointer; font-size: 1.5rem;" onclick="toggleSidebar()">☰ TyhLand</div>
         <div>
             <button>Логин</button> <button>Регистрация</button> 
-            <button onclick="toggleTheme()">🌓</button>
+            <button onclick="toggleTheme()">Тема</button>
         </div>
     </header>
 
-    <div class="sidebar" id="sidebar" onclick="toggleSidebar()">
-        <ul>
-            <li>Настройки</li><li>Аккаунт</li><li>Правила</li><li>Режимы</li><li>Донат</li>
+    <div class="sidebar" id="sidebar">
+        <ul style="list-style:none; padding:0;">
+            <li style="margin:20px 0;">Настройки</li><li>Аккаунт</li><li>Правила</li><li>Режимы</li><li>Донат</li>
         </ul>
     </div>
 
-    <main style="text-align: center; padding: 60px 20px;">
-        <h1>TyhLand — Технологический прорыв</h1>
-        <p>Лучший сервер с автоматизацией. Выбирай нас.</p>
+    <main style="text-align: center; padding: 80px 20px;">
+        <h1>TyhLand</h1>
+        <p>Сервер, который задает стандарты.</p>
     </main>
 
     <section class="modes-grid">
         <div class="card"><h3>Дуэли</h3><p>PvP-арена: только скилл.</p></div>
         <div class="card"><h3>Столбы удачи</h3><p>Прыгни и найди лут.</p></div>
         <div class="card"><h3>Бедроковая коробка</h3><p>Выживание в тесноте.</p></div>
-        <div class="card"><h3>Bedwars</h3><p>Защищай кровать, ломай чужие.</p></div>
+        <div class="card"><h3>OneBlock</h3><p>Один блок — бесконечные возможности.</p></div>
     </section>
 
     <script>
